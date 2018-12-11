@@ -421,7 +421,7 @@ const aggregators = (tpl => ({
   'Count Unique Values': tpl.countUnique(usFmtInt),
   'List Unique Values': tpl.listUnique(', '),
   Sum: tpl.sum(usFmt),
-  'Integer Sum': tpl.sum(usFmtInt),
+  'Soma de Inteiros': tpl.sum(usFmtInt),
   Average: tpl.average(usFmt),
   Median: tpl.median(usFmt),
   'Sample Variance': tpl.var(1, usFmt),
