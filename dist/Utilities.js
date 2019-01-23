@@ -179,6 +179,23 @@ var getSort = function getSort(sorters, attr) {
   }
   return naturalSort;
 };
+// aggregator templates to fr number formatting
+var frFmt = numberFormat({
+  thousandsSep: ".",
+  decimalSep: ","
+});
+var frFmtInt = numberFormat({
+  digitsAfterDecimal: 0,
+  thousandsSep: ".",
+  decimalSep: ","
+});
+var frFmtPct = numberFormat({
+  digitsAfterDecimal: 2,
+  scaler: 100,
+  suffix: "%",
+  thousandsSep: ".",
+  decimalSep: ","
+});
 
 // aggregator templates default to US number formatting but this is overrideable
 var usFmt = numberFormat();
@@ -485,26 +502,23 @@ aggregatorTemplates.stdev = function (ddof, f) {
 // default aggregators & renderers use US naming and number formatting
 var aggregators = function (tpl) {
   return {
-    Count: tpl.count(usFmtInt),
-    'Contar Unico': tpl.countUnique(usFmtInt),
-    'Listar Unico': tpl.listUnique(', '),
-    'Soma': tpl.sum(usFmt),
-    'Soma de Inteiros': tpl.sum(usFmtInt),
-    "Média": tpl.average(usFmt),
-    "Mediana": tpl.median(usFmt),
-    'Variação de amostra': tpl.var(1, usFmt),
-    'Desvio Padrão da Amostra': tpl.stdev(1, usFmt),
-    "Mínimo": tpl.min(usFmt),
-    "Máximo": tpl.max(usFmt),
-    "Primeiro": tpl.first(usFmt),
-    "Último": tpl.last(usFmt),
-    'Soma sobre Soma': tpl.sumOverSum(usFmt),
-    'Soma como fração do total': tpl.fractionOf(tpl.sum(), 'total', usFmtPct),
-    'Soma como fração de linhas': tpl.fractionOf(tpl.sum(), 'row', usFmtPct),
-    'Soma como fração de colunas': tpl.fractionOf(tpl.sum(), 'col', usFmtPct),
-    'Contar como fração do total': tpl.fractionOf(tpl.count(), 'total', usFmtPct),
-    'Contar como fração de linhas': tpl.fractionOf(tpl.count(), 'row', usFmtPct),
-    'Contar como Fração de Colunas': tpl.fractionOf(tpl.count(), 'col', usFmtPct)
+    "Contagem": tpl.count(frFmtInt),
+    "Contagem de Valores únicos": tpl.countUnique(frFmtInt),
+    "Lista de Valores únicos": tpl.listUnique(", "),
+    "Soma": tpl.sum(frFmt),
+    "Soma de Inteiros": tpl.sum(frFmtInt),
+    "Média": tpl.average(frFmt),
+    "Mínimo": tpl.min(frFmt),
+    "Máximo": tpl.max(frFmt),
+    "Soma sobre Soma": tpl.sumOverSum(frFmt),
+    "Limite Superior a 80%": tpl.sumOverSumBound80(true, frFmt),
+    "Limite Inferior a 80%": tpl.sumOverSumBound80(false, frFmt),
+    "Soma como Fração do Total": tpl.fractionOf(tpl.sum(), "total", frFmtPct),
+    "Soma como Fração da Linha": tpl.fractionOf(tpl.sum(), "row", frFmtPct),
+    "Soma como Fração da Coluna": tpl.fractionOf(tpl.sum(), "col", frFmtPct),
+    "Contagem como Fração do Total": tpl.fractionOf(tpl.count(), "total", frFmtPct),
+    "Contagem como Fração da Linha": tpl.fractionOf(tpl.count(), "row", frFmtPct),
+    "Contagem como Fração da Coluna": tpl.fractionOf(tpl.count(), "col", frFmtPct)
   };
 }(aggregatorTemplates);
 
@@ -512,18 +526,16 @@ var locales = {
   en: {
     aggregators: aggregators,
     localeStrings: {
-      renderError: 'An error occurred rendering the PivotTable results.',
-      computeError: 'An error occurred computing the PivotTable results.',
-      uiRenderError: 'An error occurred rendering the PivotTable UI.',
-      selectAll: 'Select All',
-      selectNone: 'Select None',
-      tooMany: '(too many to list)',
-      filterResults: 'Filter values',
-      apply: 'Apply',
-      cancel: 'Cancel',
-      totals: 'Totals',
-      vs: 'vs',
-      by: 'by'
+      renderError: "Ocorreu um error ao renderizar os resultados da Tabela Dinãmica.",
+      computeError: "Ocorreu um error ao computar os resultados da Tabela Dinãmica.",
+      uiRenderError: "Ocorreu um error ao renderizar a interface da Tabela Dinãmica.",
+      selectAll: "Selecionar Tudo",
+      selectNone: "Selecionar Nenhum",
+      tooMany: "(demais para listar)",
+      filterResults: "Filtrar resultados",
+      totals: "PROCESSADOS",
+      vs: "vs",
+      by: "por"
     }
   }
 };

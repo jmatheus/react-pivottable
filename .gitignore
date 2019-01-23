@@ -2,3 +2,5 @@ node_modules
 npm-debug.log
 examples/bundle.js
 yarn.lock
+__tests__
+yarn-error.log
