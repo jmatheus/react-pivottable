@@ -443,8 +443,6 @@ const aggregators = (tpl => ({
   "Mínimo": tpl.min(frFmt),
   "Máximo": tpl.max(frFmt),
   "Soma sobre Soma": tpl.sumOverSum(frFmt),
-  "Limite Superior a 80%": tpl.sumOverSumBound80(true, frFmt),
-  "Limite Inferior a 80%": tpl.sumOverSumBound80(false, frFmt),
   "Soma como Fração do Total": tpl.fractionOf(tpl.sum(), "total", frFmtPct),
   "Soma como Fração da Linha": tpl.fractionOf(tpl.sum(), "row", frFmtPct),
   "Soma como Fração da Coluna": tpl.fractionOf(tpl.sum(), "col", frFmtPct),
